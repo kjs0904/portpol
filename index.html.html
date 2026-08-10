@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김준서 / 품질 엔지니어</title>
+<meta name="description" content="김준서 — 공학적 지식을 바탕으로 품질 문제를 해결하는 품질 엔지니어 포트폴리오">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0A1B33;
+    --navy:#14294D;
+    --navy-light:#2C4A78;
+    --paper:#F6F8FB;
+    --white:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#5B6472;
+    --gold:#B98B4E;
+    --gold-soft:#E4C79A;
+    --green:#2F7D62;
+    --line:#DEE3EB;
+    --line-strong:#C3CCDA;
+    --radius:2px;
+    --maxw:1120px;
+    --nav-h:72px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top: calc(var(--nav-h) + 12px);}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  h1,h2,h3{margin:0; font-weight:900;}
+  p{margin:0;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  ul{margin:0; padding:0; list-style:none;}
+  button{font-family:inherit; cursor:pointer;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+
+  .eyebrow{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .eyebrow.on-dark{ color:var(--gold-soft); }
+
+  /* ============ NAV ============ */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--nav-h);
+    background:rgba(10,27,51,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav .wrap{
+    height:100%;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-brand{display:flex; align-items:baseline; gap:8px;}
+  .nav-brand .name{
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:900; font-size:19px; color:var(--white); letter-spacing:-.01em;
+  }
+  .nav-brand .role{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:11px; font-weight:500; letter-spacing:.06em;
+    color:var(--gold-soft);
+  }
+  .nav-menu{display:flex; align-items:center; gap:36px;}
+  .nav-links{display:flex; gap:32px;}
+  .nav-links a{
+    font-size:14.5px; font-weight:500; color:#C7D2E3;
+    position:relative; padding:4px 0;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--gold); transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    font-size:13.5px; font-weight:700; color:var(--navy-deep);
+    background:var(--gold); padding:10px 18px; border-radius:var(--radius);
+    letter-spacing:.01em; white-space:nowrap;
+    transition:background .2s ease, transform .2s ease;
+    border:none;
+  }
+  .nav-cta:hover{background:var(--gold-soft); transform:translateY(-1px);}
+  .nav-toggle{
+    display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px;
+  }
+  .nav-toggle span{width:22px; height:2px; background:var(--white); display:block; transition:.25s ease;}
+  .nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;}
+  .nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  @media (max-width: 860px){
+    .nav-links{
+      position:fixed; top:var(--nav-h); left:0; right:0;
+      background:var(--navy-deep); flex-direction:column; gap:0;
+      padding:8px 24px 20px;
+      transform:translateY(-8px); opacity:0; visibility:hidden;
+      transition:opacity .2s ease, transform .2s ease, visibility .2s ease;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .nav-links.open{transform:translateY(0); opacity:1; visibility:visible;}
+    .nav-links a{padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); width:100%;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;}
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    padding:calc(var(--nav-h) + 96px) 0 90px;
+    background:var(--navy-deep);
+    overflow:hidden;
+  }
+  .hero-grid-bg{
+    position:absolute; inset:0; opacity:.5; pointer-events:none;
+  }
+  .hero-vignette{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,27,51,0) 0%, rgba(10,27,51,0.35) 60%, var(--navy-deep) 100%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative; z-index:1;}
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid rgba(185,139,78,0.4);
+    padding:6px 14px; border-radius:100px;
+    margin-bottom:22px;
+  }
+  .hero-badge .dot{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(47,125,98,0.25);}
+  .hero-badge span.txt{font-family:'Space Grotesk',sans-serif; font-size:11.5px; letter-spacing:.1em; color:#C7D2E3;}
+
+  .hero h1{
+    color:var(--white);
+    font-size:clamp(38px, 6.4vw, 68px);
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    margin-bottom:20px;
+  }
+  .hero h1 .role{
+    display:block; color:var(--gold-soft);
+    font-size:clamp(20px, 3vw, 30px);
+    font-weight:700; margin-top:10px;
+  }
+  .hero-sub{
+    max-width:560px;
+    color:#B8C4DA;
+    font-size:clamp(15px, 2vw, 18px);
+    line-height:1.7;
+    margin-bottom:40px;
+  }
+  .hero-actions{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:56px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:14px 24px; border-radius:var(--radius);
+    font-size:14.5px; font-weight:700; letter-spacing:.01em;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--gold); color:var(--navy-deep);}
+  .btn-primary:hover{background:var(--gold-soft); transform:translateY(-2px);}
+  .btn-outline{border-color:rgba(255,255,255,0.28); color:var(--white);}
+  .btn-outline:hover{border-color:var(--white); transform:translateY(-2px);}
+  .btn svg{width:16px; height:16px; flex-shrink:0;}
+
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid rgba(255,255,255,0.12);
+    padding-top:26px;
+  }
+  .hero-meta .item{
+    padding:0 28px 0 0; margin-right:28px;
+    border-right:1px solid rgba(255,255,255,0.12);
+  }
+  .hero-meta .item:last-child{border-right:none;}
+  .hero-meta .label{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px;
+    letter-spacing:.08em; color:#7C8BA8; text-transform:uppercase; margin-bottom:6px;
+  }
+  .hero-meta .value{font-size:14px; color:#E5EAF2; font-weight:500;}
+
+  /* ============ SECTION shell ============ */
+  .section{padding:104px 0;}
+  .section-head{margin-bottom:52px; max-width:640px;}
+  .section-head .eyebrow{margin-bottom:14px; display:block;}
+  .section-head h2{
+    font-size:clamp(28px, 4vw, 38px);
+    color:var(--navy-deep); letter-spacing:-.01em;
+  }
+  .section-head p{margin-top:14px; color:var(--ink-soft); font-size:15.5px;}
+  .section-alt{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+
+  /* ============ ABOUT ============ */
+  .about-layout{
+    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:64px; align-items:center;
+  }
+  .about-text p{color:var(--ink); font-size:16px; line-height:1.85; margin-bottom:16px;}
+  .about-facts{
+    margin-top:32px; display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .about-facts .fact{background:var(--paper); padding:18px 20px;}
+  .about-facts .fact .k{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.08em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:8px; display:block;
+  }
+  .about-facts .fact .v{font-size:14.5px; font-weight:500; color:var(--navy-deep);}
+
+  .about-art{
+    background:var(--navy-deep); border-radius:4px; padding:28px;
+    position:relative; overflow:hidden;
+  }
+  .about-art svg{width:100%; height:auto;}
+  .about-art .caption{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.06em;
+    color:#7C8BA8; margin-top:16px; text-align:center;
+  }
+
+  /* ============ STRENGTHS ============ */
+  .strength-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;}
+  .strength-card{
+    background:var(--white); border:1px solid var(--line);
+    padding:32px 26px; position:relative;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .strength-card:hover{transform:translateY(-4px); border-color:var(--navy-light); box-shadow:0 16px 32px -18px rgba(10,27,51,0.25);}
+  .strength-card::before, .strength-card::after{
+    content:""; position:absolute; width:16px; height:16px;
+    border-color:var(--gold); border-style:solid; border-width:0;
+  }
+  .strength-card::before{top:-1px; left:-1px; border-top-width:2px; border-left-width:2px;}
+  .strength-card::after{bottom:-1px; right:-1px; border-bottom-width:2px; border-right-width:2px;}
+  .strength-num{
+    font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600;
+    color:var(--gold); letter-spacing:.08em; margin-bottom:18px; display:block;
+  }
+  .strength-card h3{font-size:19px; color:var(--navy-deep); margin-bottom:12px; letter-spacing:-.01em;}
+  .strength-card p{font-size:14.5px; color:var(--ink-soft); line-height:1.7;}
+
+  /* ============ PROJECT (signature card) ============ */
+  .project-flow{
+    display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px;
+  }
+  .project-flow .step{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--ink-soft);
+  }
+  .project-flow .step .n{
+    width:22px; height:22px; border-radius:50%; border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--navy);
+    flex-shrink:0; background:var(--white);
+  }
+  .project-flow .arrow{color:var(--line-strong); font-size:13px;}
+
+  .report-card{
+    background:var(--white); border:1px solid var(--navy);
+    box-shadow:0 30px 60px -30px rgba(10,27,51,0.25);
+  }
+  .report-head{
+    background:var(--navy-deep); color:var(--white);
+    padding:16px 26px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+  }
+  .report-head .tag{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .report-head .kr{font-size:14px; color:#C7D2E3; font-weight:500;}
+  .report-body{padding:32px 26px; display:grid; grid-template-columns: 1.4fr 1fr; gap:28px;}
+  .report-rows .row{
+    display:flex; align-items:baseline; gap:10px;
+    padding:13px 0; border-bottom:1px dashed var(--line);
+  }
+  .report-rows .row:first-child{padding-top:0;}
+  .report-rows .row .label{
+    font-size:13.5px; font-weight:700; color:var(--navy-deep); flex-shrink:0; width:92px;
+  }
+  .report-rows .row .value{font-size:14.5px; color:var(--ink);}
+  .report-rows .row .value strong{color:var(--navy);}
+
+  .report-result{
+    margin-top:18px; padding:16px 18px; background:var(--paper); border-left:3px solid var(--green);
+    font-size:14px; color:var(--ink); line-height:1.7;
+  }
+
+  .stamp-wrap{display:flex; align-items:center; justify-content:center; position:relative;}
+  .stamp{
+    width:150px; height:150px; border-radius:50%;
+    border:2px dashed var(--green); color:var(--green);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transform:rotate(-9deg);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .stamp .pass{font-size:26px; font-weight:700; letter-spacing:.02em;}
+  .stamp .sub{font-size:9.5px; letter-spacing:.16em; margin-top:2px;}
+
+  @media (max-width: 760px){
+    .report-body{grid-template-columns:1fr;}
+    .stamp-wrap{order:-1; margin-bottom:8px;}
+    .stamp{width:120px; height:120px;}
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-layout{
+    display:grid; grid-template-columns: 1fr 1fr; gap:0;
+    border:1px solid var(--line);
+  }
+  .contact-left{
+    background:var(--navy-deep); color:var(--white); padding:48px 40px;
+  }
+  .contact-left h3{font-size:24px; margin-bottom:14px; letter-spacing:-.01em;}
+  .contact-left p{color:#B8C4DA; font-size:15px; line-height:1.75; margin-bottom:28px;}
+  .contact-btns{display:flex; flex-direction:column; gap:12px;}
+
+  .contact-right{background:var(--white); padding:48px 40px;}
+  .contact-item{padding:18px 0; border-bottom:1px solid var(--line);}
+  .contact-item:first-child{padding-top:0;}
+  .contact-item:last-child{border-bottom:none; padding-bottom:0;}
+  .contact-item .k{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.08em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:6px; display:block;
+  }
+  .contact-item .v{font-size:16px; font-weight:500; color:var(--navy-deep);}
+  .contact-item .note{font-size:12.5px; color:var(--ink-soft); margin-top:4px;}
+
+  @media (max-width: 760px){
+    .contact-layout{grid-template-columns:1fr;}
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--navy-deep); padding:32px 0; color:#7C8BA8; font-size:13px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  footer a{color:#B8C4DA; transition:color .2s ease;}
+  footer a:hover{color:var(--white);}
+
+  @media (max-width: 860px){
+    .about-layout{grid-template-columns:1fr; gap:40px;}
+    .about-art{order:-1;}
+    .strength-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width: 560px){
+    .section{padding:72px 0;}
+    .hero{padding:calc(var(--nav-h) + 56px) 0 60px;}
+    .about-facts{grid-template-columns:1fr;}
+    .hero-meta{gap:16px;}
+    .hero-meta .item{margin-right:0; padding-right:16px;}
+  }
+
+  /* reveal-on-scroll */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="nav-brand">
+      <span class="name">김준서</span>
+      <span class="role">QUALITY ENGINEER</span>
+    </a>
+    <div class="nav-menu">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">소개</a></li>
+        <li><a href="#strengths">강점</a></li>
+        <li><a href="#project">프로젝트</a></li>
+        <li><a href="#contact">연락처</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">문의하기</a>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <svg class="hero-grid-bg" id="heroGrid" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="hero-vignette"></div>
+  <div class="wrap">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span class="txt">QUALITY ENGINEER PORTFOLIO</span>
+    </div>
+    <h1>
+      김준서
+      <span class="role">품질 엔지니어</span>
+    </h1>
+    <p class="hero-sub">나는 공학적 지식을 바탕으로 품질 문제를 해결하는 사람입니다.
+    현상이 아닌 원인을 추적하고, 품질과 경제성을 함께 고려한 대책을 설계합니다.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
+        포트폴리오 보기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+      <a href="resume.pdf" class="btn btn-outline" download>
+        이력서 PDF 다운로드
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+      </a>
+    </div>
+    <div class="hero-meta">
+      <div class="item">
+        <div class="label">Location</div>
+        <div class="value">부산</div>
+      </div>
+      <div class="item">
+        <div class="label">Focus</div>
+        <div class="value">품질 / 공정 엔지니어링</div>
+      </div>
+      <div class="item">
+        <div class="label">Approach</div>
+        <div class="value">원인 분석 기반 문제 해결</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">01 / ABOUT</span>
+      <h2>소개</h2>
+    </div>
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <p>저는 품질 문제의 표면적인 현상이 아니라 근본 원인을 파고들어 해결하는 엔지니어입니다.
+        공학적 지식을 바탕으로 원인을 분석하고, 품질 기준과 비용을 함께 고려한 실질적인 대책을 설계하는 것을 강점으로 합니다.</p>
+        <p>부품 부식 문제를 프로젝트 조장으로서 주도적으로 해결한 경험을 통해, 품질과 경제성이라는 두 기준을
+        모두 만족시키는 것이 좋은 엔지니어링이라고 생각하게 되었습니다.</p>
+        <div class="about-facts">
+          <div class="fact">
+            <span class="k">Role</span>
+            <span class="v">품질 엔지니어 지망</span>
+          </div>
+          <div class="fact">
+            <span class="k">Method</span>
+            <span class="v">희생양극법 (음극 방식법)</span>
+          </div>
+          <div class="fact">
+            <span class="k">Strength</span>
+            <span class="v">공학 기반 원인 분석</span>
+          </div>
+          <div class="fact">
+            <span class="k">Standard</span>
+            <span class="v">품질 · 경제성 동시 충족</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-art reveal">
+        <!-- 희생양극법(음극 방식법) 원리를 표현한 도식 — 실제 인물 사진 대신 신뢰감 있는 라인아트로 구성 -->
+        <svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="metalGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3A5A8C"/>
+              <stop offset="1" stop-color="#243F68"/>
+            </linearGradient>
+          </defs>
+          <!-- protected part -->
+          <rect x="40" y="90" width="140" height="70" rx="3" fill="url(#metalGrad)" stroke="#5A7CB0" stroke-width="1.5"/>
+          <text x="110" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#DCE4F0">STEEL PART</text>
+          <!-- anode -->
+          <rect x="255" y="150" width="34" height="46" rx="3" fill="#B98B4E" stroke="#E4C79A" stroke-width="1.5"/>
+          <text x="272" y="177" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#0A1B33" font-weight="700">Zn</text>
+          <!-- ground line -->
+          <line x1="20" y1="220" x2="330" y2="220" stroke="#2C4A78" stroke-width="1.5"/>
+          <line x1="55" y1="160" x2="55" y2="220" stroke="#5A7CB0" stroke-width="1.5"/>
+          <line x1="272" y1="196" x2="272" y2="220" stroke="#E4C79A" stroke-width="1.5"/>
+          <!-- connecting wire -->
+          <path d="M110 90 C 150 40, 230 40, 272 90" fill="none" stroke="#E4C79A" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <!-- electron flow arrows -->
+          <circle cx="150" cy="58" r="2.4" fill="#E4C79A"/>
+          <circle cx="190" cy="48" r="2.4" fill="#E4C79A"/>
+          <circle cx="230" cy="58" r="2.4" fill="#E4C79A"/>
+          <text x="190" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1" fill="#7C8BA8">e⁻ FLOW</text>
+          <!-- corrosion protection radius on part -->
+          <circle cx="110" cy="90" r="4" fill="none" stroke="#2F7D62" stroke-width="1.5"/>
+          <text x="70" y="240" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7C8BA8">PROTECTED METAL</text>
+          <text x="240" y="240" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7C8BA8">SACRIFICIAL ANODE</text>
+        </svg>
+        <div class="caption">SACRIFICIAL ANODE METHOD — 희생양극법 개념도</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STRENGTHS ============ -->
+<section class="section section-alt" id="strengths">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">02 / STRENGTHS</span>
+      <h2>강점</h2>
+      <p>품질 엔지니어로서 문제를 대하는 세 가지 태도입니다.</p>
+    </div>
+    <div class="strength-grid">
+      <div class="strength-card reveal">
+        <span class="strength-num">01</span>
+        <h3>공학적 문제 해결력</h3>
+        <p>현상이 아닌 원인을 끝까지 추적해, 근본적인 개선책을 설계합니다.</p>
+      </div>
+      <div class="strength-card reveal">
+        <span class="strength-num">02</span>
+        <h3>기준 중심의 품질 판단</h3>
+        <p>품질 기준과 근거를 바탕으로 문제를 정확하게 판정하고 대응합니다.</p>
+      </div>
+      <div class="strength-card reveal">
+        <span class="strength-num">03</span>
+        <h3>비용과 품질의 균형 감각</h3>
+        <p>품질을 지키면서도 경제성까지 고려한 현실적인 대안을 실행합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT ============ -->
+<section class="section" id="project">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">03 / PROJECT</span>
+      <h2>프로젝트</h2>
+      <p>부품 부식 문제를 프로젝트 조장으로서 주도적으로 해결한 경험입니다.</p>
+    </div>
+
+    <div class="project-flow reveal">
+      <div class="step"><span class="n">1</span>문제 발견</div>
+      <span class="arrow">→</span>
+      <div class="step"><span class="n">2</span>원인 분석</div>
+      <span class="arrow">→</span>
+      <div class="step"><span class="n">3</span>대책 수립</div>
+      <span class="arrow">→</span>
+      <div class="step"><span class="n">4</span>결과 검증</div>
+    </div>
+
+    <div class="report-card reveal">
+      <div class="report-head">
+        <span class="tag">Inspection Report</span>
+        <span class="kr">품질 검사 성적서</span>
+      </div>
+      <div class="report-body">
+        <div class="report-rows">
+          <div class="row"><span class="label">검사 항목</span><span class="value">부품 <strong>부식 문제</strong></span></div>
+          <div class="row"><span class="label">담당 역할</span><span class="value">프로젝트 조장</span></div>
+          <div class="row"><span class="label">조치 방법</span><span class="value">희생양극법 (음극 방식법)</span></div>
+          <div class="row"><span class="label">판정 기준</span><span class="value">품질 기준 충족 + 경제성 확보</span></div>
+          <div class="report-result">
+            원인 분석부터 대책 수립까지 프로젝트 조장으로서 주도하여, 희생양극법을 통해
+            품질과 경제성 두 기준을 모두 충족하는 방식으로 부식 문제를 해결했습니다.
+          </div>
+        </div>
+        <div class="stamp-wrap">
+          <div class="stamp">
+            <span class="pass">PASS</span>
+            <span class="sub">QUALITY VERIFIED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section section-alt" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">04 / CONTACT</span>
+      <h2>연락처</h2>
+    </div>
+    <div class="contact-layout reveal">
+      <div class="contact-left">
+        <h3>편하게 문의해 주세요</h3>
+        <p>품질 엔지니어 포지션 관련 문의나 궁금한 점이 있다면 언제든 연락 주세요.
+        빠르게 답변드리겠습니다.</p>
+        <div class="contact-btns">
+          <a href="mailto:email@example.com" class="btn btn-primary">
+            문의 메일 보내기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+          </a>
+          <a href="#" class="btn btn-outline" target="_blank" rel="noopener">
+            포트폴리오 링크 바로가기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-item">
+          <span class="k">Email</span>
+          <span class="v">email@example.com</span>
+          <div class="note">실제 이메일 주소로 교체해 주세요</div>
+        </div>
+        <div class="contact-item">
+          <span class="k">Phone</span>
+          <span class="v">010-0000-0000</span>
+          <div class="note">실제 연락처로 교체해 주세요</div>
+        </div>
+        <div class="contact-item">
+          <span class="k">Location</span>
+          <span class="v">부산</span>
+        </div>
+        <div class="contact-item">
+          <span class="k">Resume</span>
+          <span class="v"><a href="resume.pdf" download style="text-decoration:underline; text-underline-offset:3px;">이력서 PDF 다운로드</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <span>© 2026 김준서. All rights reserved.</span>
+    <a href="#top">맨 위로</a>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('active', open);
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('active');
+      navToggle.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // subtle blueprint dot-grid background for hero (generated, not a photo)
+  (function(){
+    const svg = document.getElementById('heroGrid');
+    const ns = "http://www.w3.org/2000/svg";
+    const w = 1600, h = 900, step = 34;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    svg.style.width = '100%';
+    svg.style.height = '100%';
+    let markup = '';
+    for (let y = 0; y <= h; y += step) {
+      for (let x = 0; x <= w; x += step) {
+        markup += `<circle cx="${x}" cy="${y}" r="1" fill="#1B3760"/>`;
+      }
+    }
+    svg.innerHTML = markup;
+  })();
+</script>
+</body>
+</html>
